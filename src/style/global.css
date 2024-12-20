@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --asideColor: #191919;
+    --iconsColor: #AEAEAE;
+    --asideTextColor: #8C8C8C;
+    --activeTab: #202020;
+    --chatsBarColor: #202020;
+    --chatsBarItemColor: #272727;
+    --chatsBarTextColor: #c5c5c5;
+    --chatsBarActiveButtonTextColor: #58A0FD;
+    --chatsBarActiveButtonColor: #2B2A2E;
+    --chatsBarActiveContainerMessageColor: #353438;
+    --chatsBarButtonTextColor: #8C8C8C;
+    --chatsBarButtonColor: #242424;
+    --chatsBarContainerMessageColor: #303030;
+}
+
+input,
+select,
+textarea {
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+
+.scrollbar-hidden {
+    -ms-overflow-style: none;  /* Internet Explorer and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+body {
+    background-color: var(--asideColor);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
