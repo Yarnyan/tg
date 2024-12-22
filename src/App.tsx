@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import { setupStore } from './store/store';
 
 import HomePage from './pages/HomePage';
+import CallsPage from './pages/CallsPage';
+import StoriesPage from './pages/StoriesPage';
 
 const store = setupStore()
 
@@ -18,6 +20,8 @@ function App() {
         <RootLayout>
           <Routes>  
             <Route path="/" element={<HomePage />} />
+            <Route path="/calls" element={<CallsPage />} />
+            <Route path="/stories" element={<StoriesPage />} />
           </Routes>
         </RootLayout>
       </BrowserRouter>

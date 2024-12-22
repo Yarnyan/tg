@@ -66,27 +66,28 @@ export default function SideBar({ }: Props) {
                             >
                                 <MenuIcon className='h-[32px] w-[32px] -[var(--iconsColor)]' sx={{ color: 'var(--iconsColor)' }} />
                             </button>
-                            <button
+                            <Link to={'/stories'}
                                 className={`w-full h-[78px] flex flex-col items-center justify-center ${getButtonClass('Stories')} ${isOpen ? 'hidden' : 'block'}`}
                                 onClick={() => { handleTabClick('Stories') }}
                             >
                                 <img src="/icons/Phone.svg" alt="" className='w-[24px] h-[24px] fill-[var(--iconColor)]' />
                                 <p className='text-[12px] font-normal text-[var(--asideTextColor)] mt-1'>Stories</p>
-                            </button>
-                            <button
+                            </Link>
+                            <Link to={'/'}
                                 className={`w-full h-[78px] flex flex-col items-center justify-center ${getButtonClass('Chats')} ${isOpen ? 'hidden' : 'block'}`}
                                 onClick={() => { handleTabClick('Chats') }}
                             >
                                 <img src="/icons/Chats.svg" alt="" className='w-[24px] h-[24px] fill-[var(--iconColor)]' />
                                 <p className='text-[12px] font-normal text-[var(--asideTextColor)] mt-1'>All chats</p>
-                            </button>
-                            <button
+                            </Link>
+                            <Link
                                 className={`w-full h-[78px] flex flex-col items-center justify-center ${getButtonClass('Calls')} ${isOpen ? 'hidden' : 'block'}`}
                                 onClick={() => { handleTabClick('Calls') }}
+                                to={'/calls'}
                             >
                                 <img src="/icons/Calls.svg" alt="" className='w-[24px] h-[24px] fill-[var(--iconColor)]' />
                                 <p className='text-[12px] font-normal text-[var(--asideTextColor)] mt-1'>Calls</p>
-                            </button>
+                            </Link>
                             <button
                                 className={`w-full h-[78px] flex flex-col items-center justify-center ${getButtonClass('New')} ${isOpen ? 'hidden' : 'block'}`}
                                 onClick={() => { handleTabClick('New') }}

@@ -19,6 +19,18 @@
     --chatsBarButtonTextColor: #8C8C8C;
     --chatsBarButtonColor: #242424;
     --chatsBarContainerMessageColor: #303030;
+    --callsBarTextColor: #909090;
+    --callsBarCallNameColor: #FFFFFF;
+    --callsBarCallDateColor: #8C8C8C;
+    --callsCalendarDateColor: #9B9B9B;
+    --callsCalendarDayColor: #1C1C1C;
+    --callsCalendarCallColor: #2C2C2C;
+    --callsCalendarActiveCallColor: #2B3644;
+    --callsCalendarCallTextColor: #BEB8D1;
+    --callsCalendarActiveCallTextColor: #58A0FD;
+    --callsCalendarActiveDayColor: #252525;
+    --storiesBarMenuTextColor: #FFFFFF;
+    --storiesBarMenuButtonBgColor: #2C2A2E;
 }
 
 input,
