@@ -104,7 +104,7 @@ export default function SideBar({ }: Props) {
                     </div>
                 </div>
                 <div className='z-10'>
-                    {token ? (
+                    {!token ? (
                         <div className='w-[76px] h-[100dvh]'>
                             <button
                                 className={`w-full h-[78px] flex items-center justify-center ${getButtonClass('Menu')} ${isOpen ? 'hidden' : 'block'}`}
