@@ -1,4 +1,3 @@
-import React from 'react'
 import StoriesBar from '../modules/storiesBar/StoriesBar'
 import Calendar from '../modules/storiesCalendar/Calendar'
 type Props = {}

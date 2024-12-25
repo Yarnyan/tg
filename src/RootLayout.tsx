@@ -1,9 +1,25 @@
+import { useEffect } from "react";
 import SideBar from "./modules/sideBar/SideBar";
+import { useAppDispatch } from "./hooks/redux";
+import { setActiveChat } from "./store/reducers/chatSlice";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const handleClick = () => {
+      const chat = localStorage.getItem('activeChat');
+      if (chat) {
+        dispatch(setActiveChat(JSON.parse(chat)));
+      }
+    };
+    handleClick();
+  }, [dispatch]);
+
   return (
     <main className="flex relative">
       <div className="absolute">

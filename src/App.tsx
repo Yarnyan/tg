@@ -9,10 +9,15 @@ import { setupStore } from './store/store';
 import HomePage from './pages/HomePage';
 import CallsPage from './pages/CallsPage';
 import StoriesPage from './pages/StoriesPage';
+import ContactsPage from './pages/ContactsPage';
+import NewCreatePage from './pages/NewCreatePage';
+import ChatPage from './pages/ChatPage';
 
 const store = setupStore()
 
 function App() {
+
+  
 
   return (
     <Provider store={store}>
@@ -22,6 +27,9 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/calls" element={<CallsPage />} />
             <Route path="/stories" element={<StoriesPage />} />
+            <Route path="/contacts" element={<ContactsPage />} />
+            <Route path="/create" element={<NewCreatePage />} />
+            <Route path="/chat/:id" element={<ChatPage />} />
           </Routes>
         </RootLayout>
       </BrowserRouter>

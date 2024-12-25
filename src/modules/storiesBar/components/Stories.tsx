@@ -1,4 +1,3 @@
-import React from 'react'
 import { IStories } from '../types/types'
 
 type Props = {

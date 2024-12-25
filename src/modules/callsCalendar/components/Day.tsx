@@ -1,4 +1,3 @@
-import React from 'react';
 import { ICall } from '../types/types';
 import dayjs from 'dayjs';
 

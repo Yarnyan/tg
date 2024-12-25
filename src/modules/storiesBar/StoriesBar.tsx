@@ -43,10 +43,10 @@ export default function StoriesBar({ }: Props) {
     return (
         <div className='min-w-[400px] h-[100dvh] bg-[var(--chatsBarColor)]'>
             <div className='w-full h-full pt-[16px]'>
-                <div className='px-[16px] flex justify-between'>
+                <div className='px-[16px] flex justify-between items-center'>
                     <p className='text-[20px] font-medium text-[var(--callsBarTextColor)]'>Stories</p>
                     <div className='flex'>
-                        <button onClick={handleClick} className={`w-[46px] h-[46px] ${anchorEl ? 'bg-[var(--storiesBarMenuButtonBgColor)] rounded-[20px]' : ''}`}>
+                        <button onClick={handleClick} className={`flex justify-center items-center w-[46px] h-[46px] ${anchorEl ? 'bg-[var(--storiesBarMenuButtonBgColor)] rounded-[20px]' : ''}`}>
                             <AddIcon sx={{ color: 'var(--chatsBarTextColor)' }} />
                         </button>
                         <button className='ml-[24px]'>

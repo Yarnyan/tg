@@ -40,7 +40,7 @@ export default function Calendar({ }: Props) {
     return (
         <div className='w-full h-full flex justify-center items-center'>
             <div className='max-w-[962px]'>
-                <div className='p-[16px] '>
+                <div className='p-[14px] '>
                     <div className='w-full flex justify-center items-center'>
                         <button onClick={nextMonth}>
                             <KeyboardArrowUpIcon sx={{ color: 'var(--callsCalendarDateColor)' }} />

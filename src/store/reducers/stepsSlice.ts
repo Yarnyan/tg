@@ -4,6 +4,8 @@ const stepsSlice = createSlice({
   name: 'steps',
   initialState: {
     currentStep: 1,
+    currentStepChannel: 1,
+    currentStepTeam: 1
   },
   reducers: {
     nextStep: (state) => {
@@ -15,8 +17,14 @@ const stepsSlice = createSlice({
     goToStep: (state, action) => {
       state.currentStep = action.payload;
     },
+    nextStepChannel: (state) => {
+      state.currentStepChannel += 1;
+    },
+    prevStepChannel: (state) => {
+      if (state.currentStepChannel > 1) state.currentStepChannel -= 1;
+    },
   },
 });
 
-export const { nextStep, prevStep, goToStep } = stepsSlice.actions;
+export const { nextStep, prevStep, goToStep, nextStepChannel, prevStepChannel } = stepsSlice.actions;
 export default stepsSlice.reducer;

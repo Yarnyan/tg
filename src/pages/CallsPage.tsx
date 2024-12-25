@@ -1,4 +1,3 @@
-import React from 'react'
 import CallsBar from '../modules/callsBar/CallsBar'
 import Calendar from '../modules/callsCalendar/Calendar'
 type Props = {}
