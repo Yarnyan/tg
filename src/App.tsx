@@ -12,6 +12,7 @@ import StoriesPage from './pages/StoriesPage';
 import ContactsPage from './pages/ContactsPage';
 import NewCreatePage from './pages/NewCreatePage';
 import ChatPage from './pages/ChatPage';
+import LoginPage from './pages/LoginPage';
 
 const store = setupStore()
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/create" element={<NewCreatePage />} />
             <Route path="/chat/:id" element={<ChatPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </RootLayout>
       </BrowserRouter>
