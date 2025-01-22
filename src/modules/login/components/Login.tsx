@@ -25,7 +25,7 @@ export default function Login({ }: Props) {
                 <input
                     type="text"
                     onChange={handleInputChange}
-                    placeholder='+0 000 000 00 00'
+                    placeholder='Code'
                     className='w-full h-[46px] rounded-[20px] bg-[var(--chatsBarItemColor)] pl-[16px] no-outline text-[var(--chatsBarTextColor)] mt-4'
                 />
                 <button className={`mt-[32px] w-full py-[16px] rounded-[20px] ${isBlocked ? 'bg-[#251D49] text-[#583FC3]' : 'bg-[#6558E8] text-[#FFFFFF]'}`} disabled={isBlocked} onClick={handleContinueClick}>
