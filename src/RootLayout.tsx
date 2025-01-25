@@ -13,6 +13,7 @@ export default function RootLayout({
   useEffect(() => {
     const handleClick = () => {
       const chat = localStorage.getItem('activeChat');
+      const theme = localStorage.setItem('theme', 'dark');
       if (chat) {
         dispatch(setActiveChat(JSON.parse(chat)));
       }

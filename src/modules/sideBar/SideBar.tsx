@@ -11,6 +11,7 @@ export default function SideBar({ }: Props) {
     const sidebarRef = useRef<HTMLDivElement | null>(null);
     const [activeTab, setActiveTab] = useState<'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories' | null>(localStorage.getItem('activeTab') as 'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories' | null);
     const [token, setToken] = useState<boolean | null>(null);
+    const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
@@ -19,6 +20,13 @@ export default function SideBar({ }: Props) {
     useEffect(() => {
         const token = localStorage.getItem('token');
         setToken(!!token);
+
+        const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else {
+            localStorage.setItem('theme', 'dark'); 
+        }
     }, []);
 
     useEffect(() => {
@@ -40,11 +48,18 @@ export default function SideBar({ }: Props) {
 
     const handleTabClick = (tab: 'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories') => {
         setActiveTab(tab);
-        localStorage.setItem('activeTab', tab)
+        localStorage.setItem('activeTab', tab);
     };
 
     const getButtonClass = (tab: 'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories') => {
         return activeTab === tab ? 'bg-[var(--activeTab)]' : 'hover:bg-[var(--hoverColor)]';
+    };
+
+    const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newTheme = event.target.checked ? 'dark' : 'light';
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+        document.body.setAttribute('data-theme', newTheme);
     };
 
     return (
@@ -61,7 +76,7 @@ export default function SideBar({ }: Props) {
                     <div className='flex flex-col mt-[24px]'>
                         <div className='flex items-center justify-between h-[48px]'>
                             <div className='flex'>
-                                <img src="/icons/sidebar/profile.svg" alt="" className='fill-[var(--iconsColor)]' />
+                                <img src="/icons/sidebar/profile.svg" alt="" class Name='fill-[var(--iconsColor)]' />
                                 <p className='text-[16px] font-medium text-[var(--callsBarCallNameColor)] ml-[16px]'>Public profile</p>
                             </div>
                             <div className='text-[12px] font-normal text-[var(--callsBarCallDateColor)] bg-[var(--chatsBarButtonColor)] rounded-[20px] px-[10px] py-[4px]'>
@@ -92,7 +107,7 @@ export default function SideBar({ }: Props) {
                                 <p className='text-[16px] font-medium text-[var(--callsBarCallNameColor)] ml-[16px]'>Night mode</p>
                             </div>
                             <div>
-                                <Switch />
+                                <Switch checked={theme === 'dark'} onChange={handleThemeChange} />
                             </div>
                         </div>
                     </div>
@@ -104,7 +119,7 @@ export default function SideBar({ }: Props) {
                     </div>
                 </div>
                 <div className='z-10'>
-                    {!token ? (
+                    {token ? (
                         <div className='w-[76px] h-[100dvh]'>
                             <button
                                 className={`w-full h-[78px] flex items-center justify-center ${getButtonClass('Menu')} ${isOpen ? 'hidden' : 'block'}`}
@@ -123,7 +138,7 @@ export default function SideBar({ }: Props) {
                                 className={`w-full h-[78px] flex flex-col items-center justify-center ${getButtonClass('Chats')} ${isOpen ? 'hidden' : 'block'}`}
                                 onClick={() => { handleTabClick('Chats') }}
                             >
-                                <img src="/icons/Chats.svg" alt="" className='w-[24px] h-[24px] fill-[var(--iconColor)]' />
+                                <img src="/icons/Chats.svg" alt="" className='w-[24px] h-[24px] fill-[var (--iconColor)]' />
                                 <p className='text-[12px] font-normal text-[var(--asideTextColor)] mt-1'>All chats</p>
                             </Link>
                             <Link
