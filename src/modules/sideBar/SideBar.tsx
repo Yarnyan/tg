@@ -159,7 +159,7 @@ export default function SideBar({ }: Props) {
                             </Link>
                         </div>
                     ) : (
-                        <Link className='text-xl font-normal text-[var(--textColor)] mt-2 ml-4 sm:ml-0' to={'/'} >Manager.ai</Link>
+                        null
                     )}
                 </div>
             </div>

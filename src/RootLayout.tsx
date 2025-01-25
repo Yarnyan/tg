@@ -6,7 +6,7 @@ import { setActiveChat } from "./store/reducers/chatSlice";
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }>) {
   const dispatch = useAppDispatch();
 
