@@ -31,11 +31,11 @@ export default function Code({ }: Props) {
                     <h1 className='text-[20px] font-bold text-[var(--callsBarCallNameColor)] mt-[12px]'>+000 00 000 00 00</h1>
                     <p className='text-[#8F8F8F] text-[14px] max-w-[340px] text-center mt-2'>A code has been sent to your phone.</p>
                     <input
-                        type="text"
-                        onChange={handleInputChange}
-                        placeholder='+0 000 000 00 00'
-                        className='w-[340px] h-[46px] rounded-[20px] bg-[var(--chatsBarItemColor)] pl-[16px] no-outline text-[var(--chatsBarTextColor)] mt-4'
-                    />
+                    type="text"
+                    onChange={handleInputChange}
+                    placeholder='Code'
+                    className='w-full h-[46px] rounded-[20px] bg-[var(--chatsBarItemColor)] pl-[16px] no-outline text-[var(--chatsBarTextColor)] mt-4'
+                />
                     <button className={`mt-[32px] w-[340px] py-[16px] rounded-[20px] ${isBlocked ? 'bg-[#251D49] text-[#583FC3]' : 'bg-[#6558E8] text-[#FFFFFF]'}`} disabled={isBlocked}>
                         Continue
                     </button>

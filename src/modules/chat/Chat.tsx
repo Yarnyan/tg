@@ -1,9 +1,11 @@
+import {useEffect} from 'react'
 import ChatHeader from './components/ChatHeader';
 import ChatFooter from './components/ChatFooter';
 import { ITextMessage } from './types/types';
 import TextMessage from './components/messages/TextMessage';
 import { useAppSelector } from '../../hooks/redux';
 import MoreLayout from './components/MoreLayout';
+import { useGetMessageQuery } from '../../store/api/Chat';
 
 type Props = {
   onOpen: () => void;
@@ -14,7 +16,7 @@ type Props = {
 
 export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: Props) {
   const activeMoreTab = useAppSelector((state) => state.chat.activeMoreTab);
-
+  const { data: message, refetch: refetchMessage } = useGetMessageQuery(null);
   const messages: ITextMessage[] = [
     {
       id: 1,
@@ -44,6 +46,10 @@ export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: 
       isRead: false,
     },
   ];
+
+  useEffect(() => {
+    refetchMessage()
+  }, [])
 
   return (
     <div className='w-full h-[100dvh] flex'>

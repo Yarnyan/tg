@@ -3,16 +3,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { Switch } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { useLocation } from 'react-router-dom';
+import Wrapper from '../profile/Wrapper';
+import { Modal } from '@mui/material'
 
 type Props = {}
 
 export default function SideBar({ }: Props) {
+    const [isOpenPrifle, setIsOpenPrifle] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState(false);
     const sidebarRef = useRef<HTMLDivElement | null>(null);
     const [activeTab, setActiveTab] = useState<'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories' | null>(localStorage.getItem('activeTab') as 'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories' | null);
     const [token, setToken] = useState<boolean | null>(null);
     const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-
+    const location = useLocation();
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
@@ -25,22 +29,22 @@ export default function SideBar({ }: Props) {
         if (savedTheme) {
             setTheme(savedTheme);
         } else {
-            localStorage.setItem('theme', 'dark'); 
+            localStorage.setItem('theme', 'dark');
         }
-    }, []);
+    }, [location]);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        };
+    // useEffect(() => {
+    //     const handleClickOutside = (event: MouseEvent) => {
+    //         if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+    //             setIsOpen(false);
+    //         }
+    //     };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [sidebarRef]);
+    //     document.addEventListener('mousedown', handleClickOutside);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     };
+    // }, [sidebarRef]);
 
     if (token === null) {
         return null;
@@ -62,6 +66,10 @@ export default function SideBar({ }: Props) {
         document.body.setAttribute('data-theme', newTheme);
     };
 
+    const a = () => {
+        setIsOpenPrifle(!isOpenPrifle);
+    }
+
     return (
         <aside className='relative z-50 bg-[var(--asideColor)]'>
             <div className='w-full h-full flex'>
@@ -76,7 +84,7 @@ export default function SideBar({ }: Props) {
                     <div className='flex flex-col mt-[24px]'>
                         <div className='flex items-center justify-between h-[48px]'>
                             <div className='flex'>
-                                <img src="/icons/sidebar/profile.svg" alt="" class Name='fill-[var(--iconsColor)]' />
+                                <img src="/icons/sidebar/profile.svg" alt="" className='fill-[var(--iconsColor)]' />
                                 <p className='text-[16px] font-medium text-[var(--callsBarCallNameColor)] ml-[16px]'>Public profile</p>
                             </div>
                             <div className='text-[12px] font-normal text-[var(--callsBarCallDateColor)] bg-[var(--chatsBarButtonColor)] rounded-[20px] px-[10px] py-[4px]'>
@@ -96,7 +104,7 @@ export default function SideBar({ }: Props) {
                             </Link>
                         </div>
                         <div className='h-[48px] flex items-center'>
-                            <button className='flex'>
+                            <button className='flex' onClick={() => a()}>
                                 <img src="/icons/sidebar/icon-2.svg" alt="" className='fill-[var(--iconsColor)]' />
                                 <p className='text-[16px] font-medium text-[var(--callsBarCallNameColor)] ml-[16px]'>Settings & Privacy</p>
                             </button>
@@ -163,6 +171,11 @@ export default function SideBar({ }: Props) {
                     )}
                 </div>
             </div>
+            {isOpen && (
+                <Modal open={isOpenPrifle} onClose={() => setIsOpenPrifle(false)}>
+                    <Wrapper />
+                </Modal>
+            )}
         </aside>
     );
 }
