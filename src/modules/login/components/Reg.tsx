@@ -12,10 +12,11 @@ export default function Reg({ }: Props) {
     const [errorMessage, setErrorMessage] = useState<string>('');
 
     const onSubmit = async (data: any) => {
-        const formData = new FormData();
-        formData.append('phone', data.phoneNumber);
+        const body = {
+            phone: String(data.phoneNumber),
+        }
         try {
-            const res = await reg(formData);
+            const res = await reg(body);
             console.log('Response:', res);
             if (res.error) {
                 setErrorMessage(res.error.data?.message);

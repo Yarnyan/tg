@@ -15,10 +15,11 @@ export default function Login({ }: Props) {
     const [login] = useLoginMutation();
 
     const onSubmit = async (data: any) => {
-        const formData = new FormData();
-        formData.append('phone', data.phoneNumber);
+        const body = {
+            phone: String(data.phoneNumber),
+        }
         try {
-            const res = await login(formData);
+            const res = await login(body);
             if (res.error) {
                 setErrorMessage(res.error.data?.message);
             } else {
@@ -26,6 +27,7 @@ export default function Login({ }: Props) {
                 localStorage.setItem('refreshToken', res.data.data.refreshToken);
                 localStorage.setItem('userId', res.data.data.userId);
                 navigate('/');
+                localStorage.setItem('activeTab', 'Chats');
                 // dispatch(nextStep());
             }
         } catch (error) {

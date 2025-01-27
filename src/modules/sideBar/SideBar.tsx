@@ -24,8 +24,9 @@ export default function SideBar({ }: Props) {
     useEffect(() => {
         const token = localStorage.getItem('token');
         setToken(!!token);
-
         const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
+        const storedTab = localStorage.getItem('activeTab') as 'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories' | null;
+        setActiveTab(storedTab);
         if (savedTheme) {
             setTheme(savedTheme);
         } else {

@@ -6,6 +6,7 @@ import loginReducer from './reducers/loginSlice';
 import profileReducer from "./reducers/profileSlice";
 import { authApi } from "./api/Auth";
 import { chatApi } from './api/Chat';
+import { userApi } from './api/User';
 const rootReducer = combineReducers({
     step: stepsReducer,
     chat: chatReducer,
@@ -14,13 +15,14 @@ const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [chatApi.reducerPath]: chatApi.reducer,
     [privacyApi.reducerPath]: privacyApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,  
 })
 
 export const setupStore = () => {
     return configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => {
-            return getDefaultMiddleware().concat(authApi.middleware, chatApi.middleware, privacyApi.middleware);
+            return getDefaultMiddleware().concat(authApi.middleware, chatApi.middleware, privacyApi.middleware, userApi.middleware);
         }, 
     })
 }
