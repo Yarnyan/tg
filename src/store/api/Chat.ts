@@ -29,7 +29,6 @@ export const chatApi = createApi({
       query: () => ({
         url: 'Chat/chats',
         method: 'GET',
-        // body: data
       })
     }),
 

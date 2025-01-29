@@ -9,7 +9,7 @@ type Props = {
 
 export default function Chat({ chat }: Props) {
   const activeChat = useAppSelector((state) => state.chat.activeChat)
-
+  console.log(chat)
   function extractTime(isoString: string): string {
     const date = new Date(isoString);
     const hours = String(date.getHours()).padStart(2, '0');
@@ -21,11 +21,12 @@ export default function Chat({ chat }: Props) {
 
   return (
     <Link 
-      className={`w-full flex justify-between items-center px-[16px] py-[12px] hover:bg-[var(--callsCalendarActiveDayColor)] duration-500 ${chat.id === activeChat?.id ? 'bg-[var(--createModalHoverColorButton)]' : ''}`} 
-      to={`/chat/${chat.id}`} 
+      className={`w-full flex justify-between items-center px-[16px] py-[12px] hover:bg-[var(--callsCalendarActiveDayColor)] duration-500`} //${chat.id === activeChat?.id ? 'bg-[var(--createModalHoverColorButton)]' : ''} 
+      to={`/chat/${chat?.id}`} 
       onClick={() => {dispatch(setActiveChat(chat)), localStorage.setItem('activeChat', JSON.stringify(chat))}}
     >
-      <div className='flex items-center w-full'>
+      <p>{chat?.id}</p>
+      {/* <div className='flex items-center w-full'>
         <img src={chat.src} alt="" className='rounded-full w-[50px] h-[50px]' />
         <div className='ml-[14px] flex flex-col w-full justify-between'>
           <div className='flex items-center justify-between w-full'>
@@ -41,7 +42,7 @@ export default function Chat({ chat }: Props) {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
     </Link>
   )
 }

@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Chat from './components/Chat'
 import { IChat } from './types/types'
 import { useGetChatsQuery } from '../../store/api/Chat'
+import { useGetUserByPhoneQuery, useGetUserByUsernameQuery } from '../../store/api/User'
 
 type Props = {}
 
@@ -11,10 +12,41 @@ export default function ChatsBar({ }: Props) {
     const { data: chats, refetch: refetchChats } = useGetChatsQuery(null)
     const { control, watch } = useForm();
     const searchValue = watch('search', '');
+    const [searchResults, setSearchResults] = useState<any>(null);
+
+    const isPhoneSearch = /^[\d+]/.test(searchValue);
+
+    const { data: userByPhone } = useGetUserByPhoneQuery(searchValue, { skip: !isPhoneSearch || searchValue.trim() === '' });
+    const { data: userByUsername } = useGetUserByUsernameQuery(searchValue, { skip: isPhoneSearch || searchValue.trim() === '' });
 
     useEffect(() => {
-        refetchChats()
+        console.log(searchValue, searchValue.trim() === '')
+        if (searchValue.trim() === '') {
+            setSearchResults(null);
+            return;
+        }
+
+        if (isPhoneSearch) {
+            if (userByPhone?.data) {
+                console.log(userByPhone?.data)
+                setSearchResults(userByPhone.data);
+            } else {
+                setSearchResults(null);
+            }
+        } else {
+            if (userByUsername?.data) {
+                setSearchResults(userByUsername.data);
+            } else {
+                setSearchResults(null);
+            }
+        }
+    }, [searchValue, userByPhone, userByUsername, isPhoneSearch]);
+
+    useEffect(() => {
+        refetchChats();
     }, []);
+
+    const displayData = searchValue.length === 0 ? chats?.data : searchResults;
 
     return (
         <div className='min-w-[400px] h-[100dvh] bg-[var(--chatsBarColor)]'>
@@ -54,13 +86,17 @@ export default function ChatsBar({ }: Props) {
                         </button>
                     </div>
                 )}
-                <div className='mt-[20px] overflow-y-scroll scrollbar-hidden' style={{ maxHeight: 'calc(100vh - 140px)' }}>
-                    {chats && chats.data && chats.data.length === 0 ? (
-                        <p className="text-center text-gray-500">Нет активных чатов</p>
-                    ) : (
-                        chats && chats.data?.map((chat: IChat) => <Chat key={chat.id} chat={chat} />)
-                    )}
 
+                <div className='mt-[20px] overflow-y-scroll scrollbar-hidden' style={{ maxHeight: 'calc(100vh - 140px)' }}>
+                    {displayData && displayData.length === 0 ? (
+                        <p className="text-center text-gray-500">Нет результатов</p>
+                    ) : (
+                        Array.isArray(displayData) ? (
+                            displayData.map((result: any) => <Chat key={result.id} chat={result} />)
+                        ) : (
+                            <Chat key={displayData?.id} chat={displayData} />
+                        )
+                    )}
                 </div>
             </div>
         </div>
