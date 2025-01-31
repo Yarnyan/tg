@@ -41,9 +41,13 @@ const chatSlice = createSlice({
     },
     setInitialMoreTab: (state) => {
       state.moreTab = 0
-    }
+    },
+    clearActiveChat: (state) => {
+      state.activeChat = null;
+      localStorage.removeItem('activeChat');
+    },
   },
 });
 
-export const { setActiveChat, selectTab, toggleMoreTab, setMoreTab, setInitialMoreTab } = chatSlice.actions;
+export const { setActiveChat, selectTab, toggleMoreTab, setMoreTab, setInitialMoreTab, clearActiveChat } = chatSlice.actions;
 export default chatSlice.reducer;

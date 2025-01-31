@@ -31,7 +31,7 @@ export default function Reg({ }: Props) {
         <div className='w-full h-[100dvh] flex justify-center items-center flex-col pr-[11px]'>
             <img src="/image/Lock.png" alt="" className='' />
             <div className='flex flex-col items-center'>
-                <h1 className='text-[20px] font-bold text-[var(--callsBarCallNameColor)] mt-[12px]'>Sign in to TeleClone</h1>
+                <h1 className='text-[20px] font-bold text-[var(--callsBarCallNameColor)] mt-[12px]'>Sign up to TeleClone</h1>
                 <p className='text-[#8F8F8F] text-[14px] max-w-[340px] text-center mt-2'>Please provide your phone number with the correct country code to access your account</p>
                 
                 <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-center'>

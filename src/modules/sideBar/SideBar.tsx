@@ -6,6 +6,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { useLocation } from 'react-router-dom';
 import Wrapper from '../profile/Wrapper';
 import { Modal } from '@mui/material'
+import { useAppDispatch } from '../../hooks/redux';
+import { clearActiveChat } from '../../store/reducers/chatSlice';
 
 type Props = {}
 
@@ -17,6 +19,7 @@ export default function SideBar({ }: Props) {
     const [token, setToken] = useState<boolean | null>(null);
     const [theme, setTheme] = useState<'dark' | 'light'>('dark');
     const location = useLocation();
+    const dispatch = useAppDispatch();
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
@@ -145,7 +148,7 @@ export default function SideBar({ }: Props) {
                             </Link>
                             <Link to={'/'}
                                 className={`w-full h-[78px] flex flex-col items-center justify-center ${getButtonClass('Chats')} ${isOpen ? 'hidden' : 'block'}`}
-                                onClick={() => { handleTabClick('Chats') }}
+                                onClick={() => { handleTabClick('Chats'), dispatch(clearActiveChat()) }}
                             >
                                 <img src="/icons/Chats.svg" alt="" className='w-[24px] h-[24px] fill-[var (--iconColor)]' />
                                 <p className='text-[12px] font-normal text-[var(--asideTextColor)] mt-1'>All chats</p>
