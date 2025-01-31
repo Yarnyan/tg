@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import { useEffect, useState } from 'react';
 import ChatHeader from './components/ChatHeader';
 import ChatFooter from './components/ChatFooter';
 import { ITextMessage } from './types/types';
@@ -6,6 +6,7 @@ import TextMessage from './components/messages/TextMessage';
 import { useAppSelector } from '../../hooks/redux';
 import MoreLayout from './components/MoreLayout';
 import { useGetMessageQuery } from '../../store/api/Chat';
+import { useLocation } from 'react-router-dom';
 
 type Props = {
   onOpen: () => void;
@@ -16,40 +17,30 @@ type Props = {
 
 export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: Props) {
   const activeMoreTab = useAppSelector((state) => state.chat.activeMoreTab);
-  const { data: message, refetch: refetchMessage } = useGetMessageQuery(null);
-  const messages: ITextMessage[] = [
-    {
-      id: 1,
-      text: 'Hello, how are you?',
-      senderId: 1,
-      senderName: 'John Doe',
-      senderSrc: '/image/1.jpg',
-      time: '09:00',
-      isRead: true,
-    },
-    {
-      id: 2,
-      text: 'I am fine, thanks for asking. How about you?',
-      senderId: 2,
-      senderName: 'Jane Smith',
-      senderSrc: '/image/1.jpg',
-      time: '09:15',
-      isRead: false,
-    },
-    {
-      id: 3,
-      text: 'I’ve also spoken with the client, and they’re happy with how the interface looks visually. There are still a few minor tweaks needed based on their latest comments, but nothing too major. Overall, the project is moving along smoothly.',
-      senderId: 2,
-      senderName: 'Jane Smith',
-      senderSrc: '/image/1.jpg',
-      time: '09:15',
-      isRead: false,
-    },
-  ];
+  const activeChat = useAppSelector((state) => state.chat.activeChat);
+  const [messages, setMessages] = useState<any[]>()
+  const location = useLocation();
+  const { data, refetch: refetchMessage } = useGetMessageQuery(activeChat && activeChat.id, {
+    skip: !activeChat || !activeChat.messages,
+  });
+
+
 
   useEffect(() => {
-    refetchMessage()
-  }, [])
+    setMessages([]);
+  }, [location]);
+
+  useEffect(() => {
+    if (data) {
+      setMessages(data.data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (activeChat && activeChat.messages) {
+      refetchMessage();
+    }
+  }, [activeChat, refetchMessage]);
 
   return (
     <div className='w-full h-[100dvh] flex'>
@@ -58,7 +49,7 @@ export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: 
           <ChatHeader onOpen={onOpen} activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
         <div className='flex-1 p-[16px]'>
-          {messages.map((item) => <TextMessage key={item.id} message={item} />)}
+          {messages && messages.map((item: any) => <TextMessage key={item.id} message={item} />)}
         </div>
         <div className="w-full">
           <ChatFooter />
@@ -66,7 +57,7 @@ export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: 
       </div>
       {activeMoreTab && (
         <div className='w-[350px]'>
-          <MoreLayout onOpenImages={onOpenImages}/>
+          <MoreLayout onOpenImages={onOpenImages} />
         </div>
       )}
     </div>

@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Picker from 'emoji-picker-react';
-import { useSendMessageMutation } from '../../../store/api/Chat';
+import { useSendMessageMutation, useSendMessageChatMutation } from '../../../store/api/Chat';
+import { useAppSelector } from '../../../hooks/redux';
 
 type Props = {};
-
 
 export default function ChatFooter({}: Props) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -12,6 +12,9 @@ export default function ChatFooter({}: Props) {
   const [message, setMessage] = useState('');
   const { control, handleSubmit, setValue } = useForm();
   const [sendMessage] = useSendMessageMutation();
+  const [sendMessageChat] = useSendMessageChatMutation();
+
+  const activeChat = useAppSelector((state) => state.chat.activeChat);
 
   const handleFileButtonClick = () => {
     if (fileInputRef.current) {
@@ -25,20 +28,25 @@ export default function ChatFooter({}: Props) {
   };
 
   const onSubmit = async (data: any) => {
-    const formData = new FormData();
-    formData.append('chatId', '1');
-    formData.append('message', data.message);
-    
-    if (data.file[0]) {
-      formData.append('file', data.file[0]);
+    if (activeChat && activeChat.messages) {
+      await sendMessageChat({
+        chatId: activeChat.id,
+        message: data.message,
+        isSecret: false,
+      });
+    } else {
+      await sendMessage({
+        userId: activeChat && activeChat.id,
+        message: data.message,
+      });
     }
+    setMessage(''); 
+  };
 
-    try {
-      await sendMessage(formData).unwrap();
-      setMessage('');
-      setValue('message', '');
-    } catch (error) {
-      console.error('Failed to send message:', error);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      handleSubmit(onSubmit)(); 
     }
   };
 
@@ -46,7 +54,6 @@ export default function ChatFooter({}: Props) {
     <div className='w-full h-[62px] bg-[var(--chatsBarButtonColor)]'>
       <form onSubmit={handleSubmit(onSubmit)} className='py-[12px] px-[20px] flex justify-between items-center h-full'>
         <div className='flex items-center w-full'>
-          {/* Контролируем первый input с файлом */}
           <Controller
             name="file"
             control={control}
@@ -67,8 +74,6 @@ export default function ChatFooter({}: Props) {
               </>
             )}
           />
-          
-          {/* Контролируем второй input для ввода текста */}
           <Controller
             name="message"
             control={control}
@@ -78,9 +83,10 @@ export default function ChatFooter({}: Props) {
                 placeholder="Write a message..."
                 value={message}
                 onChange={(e) => {
-                  setMessage(e.target.value); // обновляем локальное состояние
-                  field.onChange(e); // передаем изменения в react-hook-form
+                  setMessage(e.target.value); 
+                  field.onChange(e);
                 }}
+                onKeyDown={handleKeyDown}
                 className='ml-[20px] bg-[transparent] text-[var(--chatsBarTextColor)] w-full'
               />
             )}
@@ -88,16 +94,16 @@ export default function ChatFooter({}: Props) {
         </div>
         <div className='flex items-center'>
           <button type="button" className='ml-[30px] min-w-[24px] min-h-[24px]' onClick={() => setShowPicker(!showPicker)}>
-            <img src="/icons/FooterSecond.svg" alt="" className='w-[24px] h-[24px]'/>
+            <img src="/icons/FooterSecond.svg" alt="" className='w-[24px] h-[24px]' />
           </button>
           <button type="submit" className='ml-[30px] min-w-[24px] min-h-[24px]'>
-            <img src="/icons/FooterThird.svg" alt="" className='w-[24px] h-[24px]'/>
+            <img src="/icons/FooterThird.svg" alt="" className='w-[24px] h-[24px]' />
           </button>
         </div>
       </form>
       {showPicker && (
         <div className="absolute bottom-[70px] right-[10px] z-10">
-          <Picker onEmojiClick={onEmojiClick} />
+          <Picker onEmojiClick={ onEmojiClick} />
         </div>
       )}
     </div>

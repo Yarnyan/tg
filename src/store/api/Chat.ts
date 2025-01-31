@@ -4,34 +4,38 @@ import { baseQueryWithReauth } from '../base/base'
 export const chatApi = createApi({
   reducerPath: 'chatApi',
   baseQuery: baseQueryWithReauth('http://localhost:5199/api'),
+  tagTypes: ['Messages'],
   endpoints: (builder) => ({
     getMessage: builder.query({
-      query: () => ({
-        url: 'Chat/messages',
+      query: (data) => ({
+        url: `Chat/messages?chatId=${data}&isSecret=false`,
         method: 'GET',
-      })
+      }),
+      providesTags: ['Messages'],
     }),
     sendMessage: builder.mutation({
       query: (data) => ({
         url: 'Chat/sendMessageUser',
         method: 'POST',
         body: data
-      })
+      }),
+      invalidatesTags: ['Messages'],
     }),
     sendMessageChat: builder.mutation({
       query: (data) => ({
         url: 'Chat/sendMessageChat',
         method: 'POST',
         body: data
-      })
+      }),
+      invalidatesTags: ['Messages'],
     }),
     getChats: builder.query({
       query: () => ({
         url: 'Chat/chats',
         method: 'GET',
-      })
+      }),
+      providesTags: ['Messages'],
     }),
-
   }),
 })
 
