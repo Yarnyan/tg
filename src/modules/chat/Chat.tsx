@@ -17,7 +17,7 @@ type Props = {
 export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: Props) {
   const activeMoreTab = useAppSelector((state) => state.chat.activeMoreTab);
   const activeChat = useAppSelector((state) => state.chat.activeChat);
-  const [messages, setMessages] = useState<any[]>()
+  const [messages, setMessages] = useState<any[]>([]);
 
   const { data, refetch: refetchMessage, isError } = useGetMessageQuery(activeChat && activeChat.id, {
     // skip: !activeChat || !activeChat.messages,
@@ -26,7 +26,7 @@ export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: 
   useEffect(() => {
     if (isError) {
       setMessages([]);
-      console.log('error')
+      console.log('error');
     }
   }, [isError]);
 
@@ -48,11 +48,11 @@ export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: 
         <div className="w-full">
           <ChatHeader onOpen={onOpen} activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
-        <div className='flex-1 p-[16px]'>
+        <div className='flex-1 p-[16px] overflow-y-auto'>
           {messages && messages.map((item: any) => <TextMessage key={item.id} message={item} />)}
         </div>
         <div className="w-full">
-          <ChatFooter />
+          <ChatFooter setMessages={setMessages} />
         </div>
       </div>
       {activeMoreTab && (
@@ -63,3 +63,4 @@ export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: 
     </div>
   );
 }
+

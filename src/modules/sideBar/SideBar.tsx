@@ -15,7 +15,7 @@ export default function SideBar({ }: Props) {
     const [isOpenPrifle, setIsOpenPrifle] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState(false);
     const sidebarRef = useRef<HTMLDivElement | null>(null);
-    const [activeTab, setActiveTab] = useState<'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories' | null>(localStorage.getItem('activeTab') as 'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories' | null);
+    const [activeTab, setActiveTab] = useState<'Chats' | 'Calls' | 'New' | 'Stories' | null>(localStorage.getItem('activeTab') as | 'Chats' | 'Calls' | 'New' | 'Stories' | null);
     const [token, setToken] = useState<boolean | null>(null);
     const [theme, setTheme] = useState<'dark' | 'light'>('dark');
     const location = useLocation();
@@ -28,7 +28,7 @@ export default function SideBar({ }: Props) {
         const token = localStorage.getItem('token');
         setToken(!!token);
         const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
-        const storedTab = localStorage.getItem('activeTab') as 'Menu' | 'Chats' | 'Calls' | 'New' | 'Stories' | null;
+        const storedTab = localStorage.getItem('activeTab') as | 'Chats' | 'Calls' | 'New' | 'Stories' | null;
         setActiveTab(storedTab);
         if (savedTheme) {
             setTheme(savedTheme);
@@ -37,18 +37,19 @@ export default function SideBar({ }: Props) {
         }
     }, [location]);
 
-    // useEffect(() => {
-    //     const handleClickOutside = (event: MouseEvent) => {
-    //         if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-    //             setIsOpen(false);
-    //         }
-    //     };
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+                setIsOpenPrifle(false);
+            }
+        };
 
-    //     document.addEventListener('mousedown', handleClickOutside);
-    //     return () => {
-    //         document.removeEventListener('mousedown', handleClickOutside);
-    //     };
-    // }, [sidebarRef]);
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [sidebarRef]);
 
     if (token === null) {
         return null;
@@ -135,7 +136,7 @@ export default function SideBar({ }: Props) {
                         <div className='w-[76px] h-[100dvh]'>
                             <button
                                 className={`w-full h-[78px] flex items-center justify-center ${getButtonClass('Menu')} ${isOpen ? 'hidden' : 'block'}`}
-                                onClick={() => { handleTabClick('Menu'), toggleSidebar() }}
+                                onClick={() => { toggleSidebar() }}
                             >
                                 <MenuIcon className='h-[32px] w-[32px] -[var(--iconsColor)]' sx={{ color: 'var(--iconsColor)' }} />
                             </button>

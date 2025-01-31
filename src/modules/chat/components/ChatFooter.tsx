@@ -4,9 +4,11 @@ import Picker from 'emoji-picker-react';
 import { useSendMessageMutation, useSendMessageChatMutation } from '../../../store/api/Chat';
 import { useAppSelector } from '../../../hooks/redux';
 
-type Props = {};
+type Props = {
+  setMessages: React.Dispatch<React.SetStateAction<any[]>>;
+};
 
-export default function ChatFooter({}: Props) {
+export default function ChatFooter({ setMessages }: Props) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [showPicker, setShowPicker] = useState(false);
   const [message, setMessage] = useState('');
@@ -34,13 +36,21 @@ export default function ChatFooter({}: Props) {
         message: data.message,
         isSecret: false,
       });
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { id: Date.now(), text: data.message, senderId: activeChat.id }, 
+      ]);
     } else {
       await sendMessage({
         userId: activeChat && activeChat.id,
         message: data.message,
       });
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { id: Date.now(), text: data.message, senderId: activeChat.id },
+      ]);
     }
-    setMessage(''); 
+    setMessage('');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
