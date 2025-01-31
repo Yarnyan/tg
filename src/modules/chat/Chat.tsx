@@ -6,7 +6,6 @@ import TextMessage from './components/messages/TextMessage';
 import { useAppSelector } from '../../hooks/redux';
 import MoreLayout from './components/MoreLayout';
 import { useGetMessageQuery } from '../../store/api/Chat';
-import { useLocation } from 'react-router-dom';
 
 type Props = {
   onOpen: () => void;
@@ -19,22 +18,23 @@ export default function Chat({ onOpen, activeTab, setActiveTab, onOpenImages }: 
   const activeMoreTab = useAppSelector((state) => state.chat.activeMoreTab);
   const activeChat = useAppSelector((state) => state.chat.activeChat);
   const [messages, setMessages] = useState<any[]>()
-  const location = useLocation();
-  const { data, refetch: refetchMessage } = useGetMessageQuery(activeChat && activeChat.id, {
-    skip: !activeChat || !activeChat.messages,
+
+  const { data, refetch: refetchMessage, isError } = useGetMessageQuery(activeChat && activeChat.id, {
+    // skip: !activeChat || !activeChat.messages,
   });
 
-
-
   useEffect(() => {
-    setMessages([]);
-  }, [location]);
+    if (isError) {
+      setMessages([]);
+      console.log('error')
+    }
+  }, [isError]);
 
   useEffect(() => {
     if (data) {
       setMessages(data.data);
     }
-  }, [data]);
+  }, [data, activeChat, refetchMessage]);
 
   useEffect(() => {
     if (activeChat && activeChat.messages) {

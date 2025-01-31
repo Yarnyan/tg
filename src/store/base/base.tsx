@@ -17,25 +17,31 @@ const customBaseQuery = (baseUrl: string) => fetchBaseQuery({
 export const baseQueryWithReauth = (baseUrl: string) => async (args: any, api: any, extraOptions: any) => {
   let result = await customBaseQuery(baseUrl)(args, api, extraOptions);
 
-  // Если получаем 401, пробуем обновить токен
   if (result.error && result.error.status === 401) {
+    const userId = localStorage.getItem('userId'); 
+    const accessToken = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    const body = {
+      userId: userId ? parseInt(userId, 10) : 0,
+      accessToken: accessToken || '',
+      refreshToken: refreshToken || '',
+    };
+
     const refreshResult = await customBaseQuery(baseUrl)({
-      url: 'auth/refresh',
+      url: 'auth/refresh-token',
       method: 'POST',
+      body, 
     }, api, extraOptions);
 
-    // Если обновление токена прошло успешно
     if (refreshResult.data) {
-      // Обновите токен в localStorage, если это необходимо
-      const newToken = refreshResult.data.token; // Предположим, что новый токен возвращается в этом поле
-      const refreshToken = refreshResult.data.refreshToken; // Предположим, что новый токен возвращается в этом поле
+      const newToken = refreshResult.data.accessToken; 
+      const newRefreshToken = refreshResult.data.refreshToken; 
       localStorage.setItem('token', newToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('refreshToken', newRefreshToken);
 
-      // Повторите исходный запрос с новым токеном
       result = await customBaseQuery(baseUrl)(args, api, extraOptions);
     } else {
-      // Если обновление токена также вернуло 401, редиректим на страницу входа
       localStorage.clear();
       window.location.href = '/login';
     }
@@ -43,4 +49,3 @@ export const baseQueryWithReauth = (baseUrl: string) => async (args: any, api: a
 
   return result;
 };
-

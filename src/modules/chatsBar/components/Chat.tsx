@@ -9,7 +9,7 @@ type Props = {
 
 export default function Chat({ chat }: Props) {
   const activeChat = useAppSelector((state) => state.chat.activeChat)
-  console.log(chat)
+  console.log(chat, activeChat)
   function extractTime(isoString: string): string {
     const date = new Date(isoString);
     const hours = String(date.getHours()).padStart(2, '0');
@@ -21,7 +21,7 @@ export default function Chat({ chat }: Props) {
 
   return (
     <Link 
-      className={`w-full flex justify-between items-center px-[16px] py-[12px] hover:bg-[var(--callsCalendarActiveDayColor)] duration-500`} //${chat.id === activeChat?.id ? 'bg-[var(--createModalHoverColorButton)]' : ''} 
+      className={`w-full flex justify-between items-center px-[16px] py-[12px] hover:bg-[var(--callsCalendarActiveDayColor)] duration-500 ${chat?.id === activeChat?.id ? 'bg-[var(--createModalHoverColorButton)]' : ''}`} //${chat.id === activeChat?.id ? 'bg-[var(--createModalHoverColorButton)]' : ''} 
       to={`/chat/${chat?.id}`} 
       onClick={() => {dispatch(setActiveChat(chat)), localStorage.setItem('activeChat', JSON.stringify(chat))}}
     >

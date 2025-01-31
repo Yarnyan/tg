@@ -17,7 +17,6 @@ export default function Reg({ }: Props) {
         }
         try {
             const res = await reg(body);
-            console.log('Response:', res);
             if (res.error) {
                 setErrorMessage(res.error.data?.message);
             } else {

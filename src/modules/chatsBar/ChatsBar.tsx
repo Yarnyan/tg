@@ -20,7 +20,6 @@ export default function ChatsBar({ }: Props) {
     const { data: userByUsername } = useGetUserByUsernameQuery(searchValue, { skip: isPhoneSearch || searchValue.trim() === '' });
 
     useEffect(() => {
-        console.log(searchValue, searchValue.trim() === '')
         if (searchValue.trim() === '') {
             setSearchResults(null);
             return;
@@ -28,7 +27,6 @@ export default function ChatsBar({ }: Props) {
 
         if (isPhoneSearch) {
             if (userByPhone?.data) {
-                console.log(userByPhone?.data)
                 setSearchResults(userByPhone.data);
             } else {
                 setSearchResults(null);
