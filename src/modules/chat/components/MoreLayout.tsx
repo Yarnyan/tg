@@ -6,6 +6,7 @@ import VideoTab from './tabs/VideoTab'
 import FilesTab from './tabs/FilesTab'
 import LinksTab from './tabs/LinksTab'
 import GifsTab from './tabs/GifsTab'
+import GroupMore from './tabs/GroupMore'
 type Props = {
     onOpenImages: () => void,
 }
@@ -14,6 +15,8 @@ export default function MoreLayout({onOpenImages}: Props) {
     const tab = useAppSelector((state) => state.chat.moreTab)
     const renderMoreTab = () => {
         switch (tab) {
+            case -1:
+                return <GroupMore />;
             case 0:
                 return <ChatMore onOpenImages={onOpenImages}/>;
             case 1:
@@ -33,7 +36,7 @@ export default function MoreLayout({onOpenImages}: Props) {
         }
     }
   return (
-    <div className='overflow-y-scroll h-full'>
+    <div className='overflow-y-scroll h-full scrollbar-hidden'>
         {renderMoreTab()} 
     </div>
   )

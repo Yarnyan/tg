@@ -64,6 +64,17 @@ textarea:focus {
     display: none;  /* Safari and Chrome */
 }
 
+/* Применение стилей к html и body */
+html, body {
+    -ms-overflow-style: none;  /* Internet Explorer и Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+    
+::-webkit-scrollbar,
+::-webkit-scrollbar {
+    display: none;  /* Safari и Chrome */
+}
+
 body {
     background-color: var(--asideColor);
     font-family: 'Inter', sans-serif;

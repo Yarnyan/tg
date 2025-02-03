@@ -20,7 +20,7 @@ const initialState: ChatState = {
   activeChat: null,
   activeTabChat: 'users',
   activeMoreTab: false,
-  moreTab: 0,
+  moreTab: -1,
 };
 
 const chatSlice = createSlice({

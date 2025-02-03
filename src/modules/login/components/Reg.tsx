@@ -1,7 +1,7 @@
 import {useState} from "react";
 import { useForm } from "react-hook-form";
 import { useRegisterMutation } from "../../../store/api/Auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 type Props = {};
 
@@ -14,6 +14,7 @@ export default function Reg({ }: Props) {
     const onSubmit = async (data: any) => {
         const body = {
             phone: String(data.phoneNumber),
+             
         }
         try {
             const res = await reg(body);
@@ -42,7 +43,13 @@ export default function Reg({ }: Props) {
                         className='w-[340px] h-[46px] rounded-[20px] bg-[var(--chatsBarItemColor)] pl-[16px] no-outline text-[var(--chatsBarTextColor)] mt-4'
                     />
                     {errors.phoneNumber && <span className='text-red-500'>Phone number is required</span>}
-                    
+                    <input
+                        type="text"
+                        {...register("username", { required: true })}
+                        placeholder='example'
+                        className='w-[340px] h-[46px] rounded-[20px] bg-[var(--chatsBarItemColor)] pl-[16px] no-outline text-[var(--chatsBarTextColor)] mt-4'
+                    />
+                    {errors.phoneNumber && <span className='text-red-500'>Username is required</span>}
                     <button 
                         type="submit" 
                         className={`mt-[32px] w-full py-[16px] rounded-[20px] ${!errors.phoneNumber ? 'bg-[#6558E8] text-[#FFFFFF]' : 'bg-[#251D49] text-[#583FC3]'}`} 
@@ -51,6 +58,7 @@ export default function Reg({ }: Props) {
                         Continue
                     </button>
                     <p className="text-center text-[#f8717c] mt-2">{errorMessage}</p>
+                    <p className="text-[#8F8F8F] text-[14px] max-w-[340px] text-center">Already have an account? <Link to="/login" className="text-[#6558E8]">Sign in</Link></p>
                 </form>
             </div>
         </div>

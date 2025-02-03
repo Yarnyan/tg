@@ -1,4 +1,6 @@
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux"; 
+import { useState } from 'react'
+import { Modal } from '@mui/material'
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import RedeemOutlinedIcon from '@mui/icons-material/RedeemOutlined';
@@ -6,9 +8,11 @@ import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
 import PhoneLockedIcon from '@mui/icons-material/PhoneLocked';
 import { useChangePhoneVisibleMutation, useChangeProfileVisibleMutation } from "../../../store/api/Privacy";
 import { Switch } from '@mui/material';
-import { setProfileVisible, setPhoneVisible } from '../../../store/reducers/profileSlice'; 
+import { setProfileVisible, setPhoneVisible } from '../../../store/reducers/profileSlice';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { prevStep } from "../../../store/reducers/profileSlice";
+import EditUsernameModal from "./EditUsernameModal";
+import EditPhotoModal from './EditPhotoModal';
 
 type Props = {}
 
@@ -19,6 +23,9 @@ const EditProfileModal = ({ }: Props) => {
 
     const profileVisible = useAppSelector((state) => state.profile.profileVisible);
     const phoneVisible = useAppSelector((state) => state.profile.phoneVisible);
+
+    const [openEditUsernameModal, setOpenEditUsernameModal] = useState<boolean>(false);
+    const [openEditPhotoModal, setOpenEditPhotoModal] = useState<boolean>(false);
 
     const handleProfileVisibilityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const isVisible = event.target.checked;
@@ -48,7 +55,9 @@ const EditProfileModal = ({ }: Props) => {
                     <p className="text-[16px] font-normal text-[var(--storiesBarMenuTextColor)] text-center">Edit</p>
                 </button>
                 <div className='mt-[16px] flex flex-col items-center'>
-                    <img src="/image/1.jpg" alt="" className="w-[120px] h-[120px] rounded-full" />
+                    <button onClick={() => setOpenEditPhotoModal(true)}>
+                        <img src="/image/1.jpg" alt="" className="w-[120px] h-[120px] rounded-full" />
+                    </button>
                     <div className="flex justify-between items-center w-full">
                         <p className="text-[14px] font-normal text-[var(--callsBarCallNameColor)] mt-[16px]">Anna Forton</p>
                         <p className="text-[14px] font-medium text-[var(--callsBarCallDateColor)]">54</p>
@@ -68,7 +77,7 @@ const EditProfileModal = ({ }: Props) => {
                 </div>
             </div>
             <div className='mt-[16px] w-full flex flex-col bg-[var(--activeTab)]'>
-                <div className='w-full p-[16px] flex justify-between items-center'>
+                <button className='w-full p-[16px] flex justify-between items-center' onClick={() => setOpenEditUsernameModal(true)}>
                     <div className="flex items-center">
                         <img src="/icons/at.svg" alt="" className="w-[24px] h-[24px]" />
                         <div className="flex flex-col ml-[12px]">
@@ -78,7 +87,7 @@ const EditProfileModal = ({ }: Props) => {
                     <div>
                         <p className='text-[14px] font-medium text-[var(--callsBarCallDateColor)]'>@annasya</p>
                     </div>
-                </div>
+                </button>
                 <div className='w-full p-[16px] flex justify-between items-center'>
                     <div className="flex items-center">
                         <PersonOutlineOutlinedIcon sx={{ color: '#AEAEAE', width: '24px', height: '24px' }} />
@@ -126,6 +135,16 @@ const EditProfileModal = ({ }: Props) => {
                     </div>
                 </div>
             </div>
+            {openEditUsernameModal && (
+                <Modal open={openEditUsernameModal} onClose={() => setOpenEditUsernameModal(false)}>
+                    <EditUsernameModal onClose={() => setOpenEditUsernameModal(false)} />
+                </Modal>
+            )}
+            {openEditPhotoModal && (
+                <Modal open={openEditPhotoModal} onClose={() => setOpenEditPhotoModal(false)}>
+                    <EditPhotoModal onClose={() => setOpenEditPhotoModal(false)} />
+                </Modal>
+            )}
         </div>
     );
 };

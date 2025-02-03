@@ -8,7 +8,7 @@ import { useGetUserByPhoneQuery, useGetUserByUsernameQuery } from '../../store/a
 type Props = {}
 
 export default function ChatsBar({ }: Props) {
-    const [activeTab, setActiveTab] = useState<'All' | 'Channels' | 'Groups'>('All')
+    const [activeTab, setActiveTab] = useState<'All' | 'Secrets' | 'Groups'>('All')
     const { data: chats, refetch: refetchChats } = useGetChatsQuery(null)
     const { control, watch } = useForm();
     const searchValue = watch('search', '');
@@ -74,14 +74,14 @@ export default function ChatsBar({ }: Props) {
                             <p className={`text-[14px] font-medium ${activeTab === 'All' ? 'text-[var(--chatsBarActiveButtonTextColor)]' : 'text-[var(--chatsBarButtonTextColor)]'}`}>All</p>
                             <span className={`ml-[8px] ${activeTab === 'All' ? 'text-[var(--chatsBarActiveButtonTextColor)] bg-[var(--chatsBarActiveContainerMessageColor)] px-[7px] rounded-[30px]' : 'text-[var(--chatsBarButtonTextColor)] bg-[var(--chatsBarContainerMessageColor)] px-[7px] rounded-[30px]'}`}>10</span>
                         </button>
-                        <button onClick={() => setActiveTab('Channels')} className={`flex rounded-[20px] px-[16px] py-[12px] ${activeTab === 'Channels' ? 'bg-[var(--chatsBarActiveButtonColor)]' : 'bg-[var(--chatsBarItemColor)]'}`}>
-                            <p className={`text-[14px] font-medium ${activeTab === 'Channels' ? 'text-[var(--chatsBarActiveButtonTextColor)]' : 'text-[var(--chatsBarButtonTextColor)]'}`}>Channels</p>
-                            <span className={`ml-[8px] ${activeTab === 'Channels' ? 'text-[var(--chatsBarActiveButtonTextColor)] bg-[var(--chatsBarActiveContainerMessageColor)] px-[7px] rounded-[30px]' : 'text-[var(--chatsBarButtonTextColor)] bg-[var(--chatsBarContainerMessageColor)] px-[7px] rounded-[30px]'}`}>10</span>
+                        <button onClick={() => setActiveTab('Secrets')} className={`flex rounded-[20px] px-[16px] py-[12px] ${activeTab === 'Secrets' ? 'bg-[var(--chatsBarActiveButtonColor)]' : 'bg-[var(--chatsBarItemColor)]'}`}>
+                            <p className={`text-[14px] font-medium ${activeTab === 'Secrets' ? 'text-[var(--chatsBarActiveButtonTextColor)]' : 'text-[var(--chatsBarButtonTextColor)]'}`}>Secrets</p>
+                            <span className={`ml-[8px] ${activeTab === 'Secrets' ? 'text-[var(--chatsBarActiveButtonTextColor)] bg-[var(--chatsBarActiveContainerMessageColor)] px-[7px] rounded-[30px]' : 'text-[var(--chatsBarButtonTextColor)] bg-[var(--chatsBarContainerMessageColor)] px-[7px] rounded-[30px]'}`}>10</span>
                         </button>
-                        <button onClick={() => setActiveTab('Groups')} className={`flex items-center rounded-[20px] px-[16px] py-[12px] ${activeTab === 'Groups' ? 'bg-[var(--chatsBarActiveButtonColor)]' : 'bg-[var(--chatsBarItemColor)]'}`}>
+                        {/* <button onClick={() => setActiveTab('Groups')} className={`flex items-center rounded-[20px] px-[16px] py-[12px] ${activeTab === 'Groups' ? 'bg-[var(--chatsBarActiveButtonColor)]' : 'bg-[var(--chatsBarItemColor)]'}`}>
                             <p className={`text-[14px] font-medium ${activeTab === 'Groups' ? 'text-[var(--chatsBarActiveButtonTextColor)]' : 'text-[var(--chatsBarButtonTextColor)]'}`}>Groups</p>
                             <span className={`ml-[8px] ${activeTab === 'Groups' ? 'text-[var(--chatsBarActiveButtonTextColor)] bg-[var(--chatsBarActiveContainerMessageColor)] px-[7px] rounded-[30px]' : 'text-[var(--chatsBarButtonTextColor)] bg-[var(--chatsBarContainerMessageColor)] px-[7px] rounded-[30px]'}`}>10</span>
-                        </button>
+                        </button> */}
                     </div>
                 )}
 

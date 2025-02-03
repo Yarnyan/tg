@@ -38,17 +38,17 @@ export default function SideBar({ }: Props) {
     }, [location]);
 
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-                setIsOpenPrifle(false);
-            }
-        };
+        // const handleClickOutside = (event: MouseEvent) => {
+        //     if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+        //         setIsOpen(false);
+        //         setIsOpenPrifle(false);
+        //     }
+        // };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
+        // document.addEventListener('mousedown', handleClickOutside);
+        // return () => {
+        //     document.removeEventListener('mousedown', handleClickOutside);
+        // };
     }, [sidebarRef]);
 
     if (token === null) {
